@@ -14,8 +14,8 @@ public class Mediatheque {
 		mediatheque.addItem( new Book("Philip K. Dick", "Le Maître du haut chateau"));
 		mediatheque.addItem( new CD(12, "Sergeant Peppers"));
 		mediatheque.printCatalog();
-		//mediatheque.printOnlyBooks();
-		//mediatheque.printOnlyCDs();		
+		mediatheque.printOnlyBooks();
+		mediatheque.printOnlyCDs();		
 	}
 	
 	public void addItem(Item i) {
@@ -28,17 +28,22 @@ public class Mediatheque {
 	}
 	
 	public void printOnlyBooks() {
-		throw new UnsupportedOperationException("Not supported yet."); 
-		/*
-		//avec instanceof
-		for (Item i : items)
-			if (i instanceof Book)
-				System.out.println(i);
-		*/
+		accept(new BookPrinter(){
+                    public void visit(CD cd){
+}
+});
 	}
 
 	public void printOnlyCDs() {
-		throw new UnsupportedOperationException("Not supported yet."); 
+		accept(new CDPrinter(){
+                    public void visit(Book book){
+}
+}); 
+	}
+
+	private void accept(ItemVisitor v) {
+            for (Item i: items)
+		i.accept(v);
 	}
 
 }
